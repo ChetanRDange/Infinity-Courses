@@ -21,6 +21,10 @@ const PORT = process.env.PORT || 3000;
 // default middleware
 app.use(express.json());
 app.use(cookieParser());
+// app.use(cors({
+//   origin:`http://localhost:5173`,
+//   credentials: true
+// }))
 app.use(cors({
   origin:`https://infinity-courses-frontend.onrender.com`,
   credentials: true
