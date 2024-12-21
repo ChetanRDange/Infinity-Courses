@@ -5,8 +5,7 @@ import {
   getAllPurchasedCourse,
   getCourseDetailWithPurchaseStatus,
   stripeWebhook,
-} from "../controller/coursePurchase.controller.js";
-
+} from "../Controller/coursePurchase.controller.js";
 const router = express.Router();
 
 router
