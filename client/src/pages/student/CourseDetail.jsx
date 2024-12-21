@@ -46,7 +46,7 @@ const CourseDetail = () => {
           <p>
             Created By{" "}
             <span className="text-[#C0C4FC] underline italic">
-              {course?.creator.name}
+              {course?.creator?.name}
             </span>
           </p>
           <div className="flex items-center gap-2 text-sm">
@@ -61,20 +61,20 @@ const CourseDetail = () => {
           <h1 className="font-bold text-xl md:text-2xl">Description</h1>
           <p
             className="text-sm"
-            dangerouslySetInnerHTML={{ __html: course.description }}
+            dangerouslySetInnerHTML={{ __html: course?.description }}
           />
           <Card>
             <CardHeader>
               <CardTitle>Course Content</CardTitle>
-              <CardDescription>{course.lectures.length} lectures</CardDescription>
+              <CardDescription>{course?.lectures.length} lectures</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {course.lectures.map((lecture, idx) => (
+              {course?.lectures.map((lecture, idx) => (
                 <div key={idx} className="flex items-center gap-3 text-sm">
                   <span>
                     {true ? <PlayCircle size={14} /> : <Lock size={14} />}
                   </span>
-                  <p>{lecture.lectureTitle}</p>
+                  <p>{lecture?.lectureTitle}</p>
                 </div>
               ))}
             </CardContent>
@@ -87,7 +87,7 @@ const CourseDetail = () => {
                 <ReactPlayer
                   width="100%"
                   height={"100%"}
-                  url={course.lectures[0].videoUrl}
+                  url={course?.lectures[0]?.videoUrl}
                   controls={true}
                 />
               </div>
