@@ -6,7 +6,7 @@ import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Loader2 } from "lucide-react";
 import Course from "./Course";
-import { useLoadUserQuery, useUpdateUserMutation } from "@/features/api/authapi";
+import { useLoadUserQuery, useUpdateUserMutation } from "@/features/api/authApi";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
