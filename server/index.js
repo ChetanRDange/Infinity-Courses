@@ -22,7 +22,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin:`http://localhost:5173`,
+  origin:`https://infinity-courses-frontend.onrender.com`,
   credentials: true
 }))
 
