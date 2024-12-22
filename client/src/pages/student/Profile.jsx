@@ -49,7 +49,7 @@ const Profile = () => {
 
     if (isLoading) return <h1>Profile Loading...</h1>;
     const user = data && data.user;
-
+    
 
     return (
         <>

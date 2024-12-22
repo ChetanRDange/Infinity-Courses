@@ -40,6 +40,7 @@ export const createCheckoutSession = async (req, res) => {
         },
       ],
       mode: "payment",
+      // https://infinity-courses-frontend.onrender.com/course-progress/6765b0c87fb1addcc83cbe68
       success_url: `https://infinity-courses-frontend.onrender.com/course-progress/${courseId}`, // once payment successful redirect to course progress page
       cancel_url: `https://infinity-courses-frontend.onrender.com/course-detail/${courseId}`,
       metadata: {
