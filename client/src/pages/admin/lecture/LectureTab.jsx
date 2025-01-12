@@ -109,6 +109,7 @@ const LectureTab = () => {
   useEffect(() => {
     if (removeSuccess) {
       toast.success(removeData.message);
+      navigate(-1)
     }
   }, [removeSuccess])
 

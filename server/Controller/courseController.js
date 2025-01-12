@@ -68,6 +68,58 @@ export const searchCourse = async (req,res) => {
   }
 }
 
+export const removecourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+
+    // Find and delete the course
+    const RCourse = await Course.findByIdAndDelete(courseId);
+    if (!RCourse) {
+      return res.status(404).json({
+        message: "Course not found!",
+      });
+    }
+
+    console.log("Course to remove", RCourse);
+
+    // Delete course thumbnail if it exists
+    if (RCourse.courseThumbnail) {
+      try {
+        const publicId = RCourse.courseThumbnail.split("/").pop().split(".")[0];
+        await deleteMediaFromCloudinary(publicId);
+        console.log("media deleted successfully")
+      } catch (error) {
+        console.error("Error deleting course thumbnail:", error);
+      }
+    }
+
+    // Delete lectures and their associated media
+    if (RCourse.lectures && RCourse.lectures.length > 0) {
+      for (const lectureId of RCourse.lectures) {
+        try {
+          const lecture = await Lecture.findByIdAndDelete(lectureId);
+          if (lecture && lecture.videoUrl) {
+            const publicId = lecture.videoUrl.split("/").pop().split(".")[0];
+            await deleteMediaFromCloudinary(publicId);
+            console.log("Media video deleted successfully");
+          }
+        } catch (error) {
+          console.error(`Error deleting lecture ${lecture?.videoUrl}:`, error); 
+        }
+      }
+    }
+    
+
+    return res.status(200).json({
+      message: "Course removed successfully.",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Failed to remove Course",
+    });
+  }
+};
 
 
 export const getPublishedCourse = async (_,res) => {

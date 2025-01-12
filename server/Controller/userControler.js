@@ -56,7 +56,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res.status(400).json({
         success: false,
-        message: "Incrrect email or password",
+        message: "Incurrect email or password",
       });
     }
 
@@ -116,7 +116,7 @@ export const getUserProfile = async (req,res) => {
   }
 }
 
-export const updateProfile = async (req, res) => {
+export const updateProfile = async (req, res) => {                                
   try {
     const userId = req.id;
     const { name } = req.body;

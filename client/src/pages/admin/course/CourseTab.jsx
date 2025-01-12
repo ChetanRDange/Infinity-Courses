@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEditCourseMutation, useGetCourseByIdQuery, usePublishCourseMutation } from "@/features/api/courseApi";
+import { useEditCourseMutation, useGetCourseByIdQuery, useRemovecourseMutation, usePublishCourseMutation } from "@/features/api/courseApi";
 import { toast } from "sonner";
+import { useLocation } from "react-router-dom"; // Import useLocation
+
 const CourseTab = () => {
 
     const [input, setInput] = useState({
@@ -22,7 +24,7 @@ const CourseTab = () => {
     });
     const params = useParams();
     const courseId = params.courseId;
-   
+    const location = useLocation();
 
     const { data: courseByIdData, isLoading: courseByIdLoading, refetch } =
         useGetCourseByIdQuery(courseId);
@@ -44,9 +46,9 @@ const CourseTab = () => {
 
             });
         }
-    }, [courseByIdData]);
+    }, [courseByIdData,location]);
 
-
+   
 
 
 
@@ -58,6 +60,7 @@ const CourseTab = () => {
     const [editCourse, { data, isLoading, isSuccess, error }] = useEditCourseMutation();
 
 
+    const [removeCourse, { isLoading: removeLoading, isSuccess: removeSuccess, error: removeError }] = useRemovecourseMutation();
 
 
 
@@ -120,15 +123,29 @@ const CourseTab = () => {
     }
 
 
+    const handleremove = async () => {
+        if (removeLoading) return; // Prevent multiple clicks
+
+        try {
+            const response = await removeCourse(courseId); 
+            if (response.data) {
+                toast.success(response.data.message || "Course removed successfully.");
+                navigate("/admin/course");
+            }
+        } catch (error) {
+            toast.error(removeError?.data?.message || "Failed to remove course");
+        }
+    };
+
 
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success(data.message || "Course update.");
+            toast.success(data?.message || "Course update.");
             navigate("/admin/course")
         }
         if (error) {
-            toast.error(error.data.message || "Failed to update course");
+            toast.error(error?.data?.message || "Failed to update course");
         }
     }, [isSuccess, error])
 
@@ -150,8 +167,8 @@ const CourseTab = () => {
                             courseByIdData?.course.isPublished ? "Unpublished" : "Publish"
                         }
                     </Button>
-                    <Button>Remove Course</Button>
-                </div>
+                    <Button onClick={handleremove}>{removeLoading ? "Removing Course" : "Remove Course"}</Button>
+                    </div>
             </CardHeader>
             <CardContent>
                 <div className="space-y-4 mt-5">
@@ -239,7 +256,7 @@ const CourseTab = () => {
                         <Input
                             type="file"
                             onChange={selectThumbnail}
-                            accept="image/"
+                            accept="image/*"
                             className="w-fit"
                         />
                         {
