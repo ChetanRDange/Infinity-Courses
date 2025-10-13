@@ -24,8 +24,8 @@ app.use(express.json());
 app.use(cookieParser());
 //Middleware to parse cookies, making them accessible via req.cookies.
 app.use(cors({
-  origin:`https://infinity-courses-frontend.onrender.com`,
-  // origin:`http://localhost:5173`,
+  // origin:`https://infinity-courses-frontend.onrender.com`,
+  origin:`http://localhost:5173`,
 
   credentials: true
 }))
