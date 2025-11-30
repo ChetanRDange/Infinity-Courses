@@ -8,6 +8,7 @@ import courseRoute from "./routes/course_route.js"
 import mediaRoute from "./routes/media_route.js"
 import purchaseRoute from "./routes/purchaseCourse.route.js"
 import courseProgressRoute from "./routes/courseProgress.route.js";
+import passport from "./Controller/passport.js";
 
 dotenv.config();//Loads configuration from a .env file, allowing the use of process.env to access environment variables.
 
@@ -32,6 +33,7 @@ app.use(cors({
 // Configures CORS to allow requests from a specific origin (replace "the frontend url" with the actual URL of your frontend).
 // credentials: true ensures cookies, authorization headers, or TLS credentials are included in requests.
 
+app.use(passport.initialize());
 
 //apis
 app.use("/api/v1/media",mediaRoute);

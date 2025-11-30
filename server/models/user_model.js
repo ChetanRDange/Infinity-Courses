@@ -7,11 +7,11 @@ const userSchema = new mongoose.Schema({
     },
     email:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     password:{
-        type:String,
-        required:true
+        type:String
     },
     role:{
         type:String,
@@ -27,7 +27,17 @@ const userSchema = new mongoose.Schema({
     photoUrl:{
         type:String,
         default:""
-    }
+    },
+    provider:{
+        type:String,
+        enum:["local", "google", "github"],
+        default:"local"
+    },
+    providerId:{
+        type:String,
+        sparse:true
+    },
+
 },{timestamps:true});
 
 export const User = mongoose.model("User", userSchema);

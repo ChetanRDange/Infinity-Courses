@@ -28,6 +28,7 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashpassword,
+      provider: "local",
     });
 
     return res.status(201).json({
@@ -58,6 +59,13 @@ export const login = async (req, res) => {
         success: false,
         message: "Incurrect email or password",
       });
+    }
+
+    if(user.provider !== "local"){
+      return res.status(400).json({
+        success:false,
+        message:`Please login using ${user.provider} provider`
+      })
     }
 
     const isPassword = await bcrypt.compare(password, user.password);
